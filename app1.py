@@ -194,8 +194,13 @@ def logout():
     return redirect(url_for('admin_login'))
 
 # ---------- RUN ----------
+
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()  # ✅ Creates Word table and others if missing
-    app.run(debug=True)
+        db.create_all()
+    
+    # Only run app if in development mode
+    if os.environ.get("FLASK_ENV") != "production":
+        app.run(debug=True)
+
 
