@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TECH.UTS - Home</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&family=Poppins:wght@400;500&display=swap');
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
+    }
+
+    header {
+        background: linear-gradient(90deg, #1e3c72, #2a5298);
+        padding: 10px 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: white;
+        font-size: 22px;
+        font-weight: bold;
+        border-bottom: 4px solid #ffcc00;
+        height: 80px;
+    }
+
+    .header-content {
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+        justify-content: center;
+    }
+
+    header img {
+        width: 65px;
+        height: 65px;
+        margin-left: 15px;
+        border-radius: 12px;
+    }
+
+    header h1 {
+        font-family: 'Roboto', sans-serif;
+        font-size: 24px;
+        text-align: center;
+        flex-grow: 1;
+    }
+
+    nav {
+        background: #1e3c72;
+        padding: 10px 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    nav ul {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    nav ul li {
+        margin: 0 15px;
+    }
+
+    nav ul li a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .carousel-container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 20px auto;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        position: relative;
+        padding: 15px;
+        border: 3px solid #ffcc00;
+    }
+
+    .carousel {
+        width: 100%;
+        height: 250px;
+        overflow: hidden;
+        position: relative;
+        border-radius: 10px;
+    }
+
+    .carousel img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        opacity: 0;
+        transform: translateX(100%);
+        transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    }
+
+    .carousel img.active {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    section {
+        padding: 20px;
+        text-align: center;
+        background: white;
+        margin: 20px auto;
+        width: 90%;
+        max-width: 1100px;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-left: 5px solid #1e3c72;
+    }
+
+    h2 {
+        color: #1e3c72;
+        font-family: 'Roboto', sans-serif;
+        border-bottom: 2px solid #ffcc00;
+        display: inline-block;
+        padding-bottom: 5px;
+    }
+
+    footer {
+        background: #222;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        border-top: 5px solid #ffcc00;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="{{ url_for('static', filename='logo.jpg') }}" alt="TECH.UTS Logo" />
+    <div class="header-content">
+      <h1>Welcome to TECH.UTS</h1>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="{{ url_for('about') }}">About Us</a></li>
+     <li><a href="{{ url_for('instagram') }}">Instagram Feed</a></li>
+      <li><a href="{{ url_for('techupdates') }}">Tech Updates</a></li>
+      <li><a href="{{ url_for('contact') }}">Contact</a></li>
+      <li><a href="{{ url_for('admin_login') }}">Admin</a></li>
+    </ul>
+  </nav>
+
+  <div class="carousel-container">
+    <div class="carousel">
+      {% for image in images %}
+        <a href="{{ image.link }}">
+          <img src="{{ url_for('static', filename='uploads/' ~ image.filename) }}" alt="Slide" class="{% if loop.index == 1 %}active{% endif %}" />
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <section id="about">
+    <h2>About TECH.UTS</h2>
+    <p>A platform that brings you the latest tech updates, trends, and insights.</p>
+  </section>
+
+  <section id="instagram">
+    <h2>Instagram Feed</h2>
+    <p>Embed latest Instagram posts here.</p>
+  </section>
+
+  <section id="tech-updates">
+    <h2>Latest Tech Updates</h2>
+    <p>Stay updated with the newest trends in technology.</p>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p>Email: contact@techuts.com</p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 TECH.UTS. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    let images = document.querySelectorAll(".carousel img");
+    let index = 0;
+
+    function showNextImage() {
+      images[index].classList.remove("active");
+      index = (index + 1) % images.length;
+      images[index].classList.add("active");
+    }
+
+    setInterval(showNextImage, 3000);
+  </script>
+
+</body>
+</html>

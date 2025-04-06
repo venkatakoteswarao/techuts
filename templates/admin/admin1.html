@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f2f4f8;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      padding: 1rem;
+      text-align: center;
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .container {
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .section {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+    h2 {
+      color: #1e3c72;
+      margin-top: 0;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: 500;
+    }
+    input[type="text"], textarea, input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #1e3c72;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .card {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      background: #fafafa;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+    }
+    .card img {
+      height: 80px;
+      width: 120px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-right: 15px;
+    }
+    .card-info {
+      flex: 1;
+    }
+    .delete-btn {
+      background: #d9534f;
+      margin-left: 15px;
+    }
+    @media (max-width: 600px) {
+      .card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .card img {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      .delete-btn {
+        width: 100%;
+        margin-top: 10px;
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>Admin Dashboard</header>
+  <div class="container">
+
+    <!-- Carousel Section -->
+    <div class="section">
+      <h2>Carousel Manager</h2>
+      <form method="POST" action="/upload_carousel" enctype="multipart/form-data">
+        <label>Image File</label>
+        <input type="file" name="carousel_image" required>
+
+        <label>Redirect URL</label>
+        <input type="text" name="carousel_link" placeholder="https://..." required>
+
+        <button type="submit">Upload</button>
+      </form>
+      <hr>
+      <h3>Current Carousel Items</h3>
+      {% for item in carousel_items %}
+        <div class="card">
+          <img src="{{ item.image_url }}" alt="carousel">
+          <div class="card-info">
+            <p><strong>Link:</strong> <a href="{{ item.link }}" target="_blank">{{ item.link }}</a></p>
+          </div>
+          <form method="POST" action="/delete_carousel">
+            <input type="hidden" name="id" value="{{ item.id }}">
+            <button type="submit" class="delete-btn">Delete</button>
+          </form>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Instagram Feed Section -->
+    <div class="section">
+      <h2>Instagram Feed Manager</h2>
+      <form method="POST" action="/upload_instagram" enctype="multipart/form-data">
+        <label>Post Image</label>
+        <input type="file" name="insta_image" required>
+
+        <label>Description</label>
+        <input type="text" name="insta_desc" required>
+
+        <label>Instagram Link</label>
+        <input type="text" name="insta_link" placeholder="https://instagram.com/..." required>
+
+        <button type="submit">Upload</button>
+      </form>
+      <hr>
+      <h3>Current Instagram Posts</h3>
+      {% for post in instagram_posts %}
+        <div class="card">
+          <img src="{{ post.image_url }}" alt="insta">
+          <div class="card-info">
+            <p>{{ post.description }}</p>
+            <p><a href="{{ post.link }}" target="_blank">View on Instagram</a></p>
+          </div>
+          <form method="POST" action="/delete_instagram">
+            <input type="hidden" name="id" value="{{ post.id }}">
+            <button type="submit" class="delete-btn">Delete</button>
+          </form>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Tech Updates Section -->
+    <div class="section">
+      <h2>Tech Updates Manager</h2>
+      <form method="POST" action="/upload_tech_update" enctype="multipart/form-data">
+        <label>Update Image</label>
+        <input type="file" name="update_image" required>
+
+        <label>Title</label>
+        <input type="text" name="update_title" required>
+
+        <label>Content</label>
+        <textarea name="update_content" rows="3" required></textarea>
+
+        <button type="submit">Upload</button>
+      </form>
+      <hr>
+      <h3>Current Tech Updates</h3>
+      {% for update in tech_updates %}
+        <div class="card">
+          <img src="{{ update.image_url }}" alt="update">
+          <div class="card-info">
+            <strong>{{ update.title }}</strong>
+            <p>{{ update.content }}</p>
+          </div>
+          <form method="POST" action="/delete_tech_update">
+            <input type="hidden" name="id" value="{{ update.id }}">
+            <button type="submit" class="delete-btn">Delete</button>
+          </form>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- About Us Section -->
+    <div class="section">
+      <h2>Edit About Us</h2>
+      <form method="POST" action="/update_about">
+        <label>About Us Content</label>
+        <textarea name="about_content" rows="5" required>{{ about_text }}</textarea>
+        <button type="submit">Update</button>
+      </form>
+    </div>
+
+    <!-- Daily Words Manager Section -->
+    <div class="section">
+      <h2>Daily Words & Meanings Manager</h2>
+      <form method="POST" action="/add_word">
+        <label>Word</label>
+        <input type="text" name="word" placeholder="e.g., Resilient" required>
+
+        <label>Meaning</label>
+        <textarea name="meaning" rows="2" placeholder="e.g., Able to recover quickly from difficulties." required></textarea>
+
+        <button type="submit">Add Word</button>
+      </form>
+      <hr>
+      <h3>Current Word List</h3>
+      {% for w in words %}
+        <div class="card">
+          <div class="card-info">
+            <p><strong>{{ w.word }}</strong>: {{ w.meaning }}</p>
+          </div>
+          <form method="POST" action="/delete_word">
+            <input type="hidden" name="id" value="{{ w.id }}">
+            <button type="submit" class="delete-btn">Delete</button>
+          </form>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</body>
+</html>

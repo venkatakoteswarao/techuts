@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Instagram Feed - TECH.UTS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(90deg, #1e3c72, #2a5298);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      border-bottom: 4px solid #ffcc00;
+    }
+
+    .feed-container {
+      flex: 1;
+      padding: 20px;
+      background-color: #f4f4f4;
+      overflow-x: auto;
+    }
+
+    .scroll-feed {
+      display: flex;
+      gap: 20px;
+      padding: 10px;
+    }
+
+    .card {
+      min-width: 250px;
+      max-width: 300px;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 15px;
+    }
+
+    .card-content p {
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .card-content a {
+      text-decoration: none;
+      color: #1e3c72;
+      font-weight: bold;
+    }
+
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      border-top: 5px solid #ffcc00;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    Instagram Feed - TECH.UTS
+  </header>
+
+  <div class="feed-container">
+    <div class="scroll-feed">
+      {% for post in posts %}
+      <div class="card">
+        <img src="{{ post.image_url }}" alt="Instagram Post" />
+        <div class="card-content">
+          <p>{{ post.description }}</p>
+          <a href="{{ post.instagram_link }}" target="_blank">View on Instagram</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 TECH.UTS. All rights reserved.
+  </footer>
+</body>
+</html>

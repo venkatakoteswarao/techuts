@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - TECH.UTS</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Background with moving glow effect */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #001f3f, #00122e);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 10%, transparent 50%);
+            animation: pulse 6s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+
+        /* Contact Card */
+        .contact-card {
+            background: linear-gradient(145deg, #0b2a52, #133b70);
+            width: 420px;
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px #ffcc00, 0 0 40px #ffcc00;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .contact-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px #ffcc00, 0 0 50px #ffcc00;
+        }
+
+        /* Profile Picture with New Glowing Border */
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid cyan;
+            box-shadow: 0px 0px 20px cyan;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .profile-pic:hover {
+            transform: rotate(5deg) scale(1.05);
+        }
+
+        /* Contact Info */
+        .contact-info {
+            margin-top: 15px;
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        .contact-info p {
+            font-size: 16px;
+            margin: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #ffffff;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .contact-info p:hover {
+            transform: translateX(10px);
+        }
+
+        .contact-info img {
+            width: 24px;
+            height: 24px;
+            border-radius: 5px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .contact-info img:hover {
+            transform: scale(1.2);
+        }
+
+        /* Links */
+        a {
+            text-decoration: none;
+            color: #ffcc00;
+            font-weight: bold;
+            transition: color 0.3s ease-in-out;
+        }
+
+        a:hover {
+            color: #ff9900;
+        }
+
+        /* Name Header */
+        h2 {
+            color: #ffcc00;
+            font-size: 24px;
+            margin-top: 10px;
+            text-shadow: 0px 0px 10px rgba(255, 204, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contact-card">
+        <img src="{{ url_for('static', filename='profile.jpg') }}" alt="Profile Picture" class="profile-pic">
+        <h2>Nelluri Gopi Sankar</h2>
+        <div class="contact-info">
+            <p><img src="{{ url_for('static', filename='email.png') }}" alt="Email Icon"> nellurigopisankar@gmail.com</p>
+            <p><img src="{{ url_for('static', filename='call.png') }}" alt="Phone Icon"> +91 73962 71746</p>
+            <p><img src="{{ url_for('static', filename='whatsapp.png') }}" alt="Phone Icon"> +91 93926 48155</p>
+            <p>
+                <img src="{{ url_for('static', filename='instagram.jpeg') }}" alt="Instagram Icon">  
+                <a href="https://instagram.com/sankar.nellurigopi" target="_blank">@sankar.nellurigopi</a>
+            </p>
+            <p><img src="{{ url_for('static', filename='location.png') }}" alt="Location Icon"> Piduguralla, Guntur, Andhra Pradesh, India - 522413</p>
+        </div>
+    </div>
+
+</body>
+</html>
